@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertyPulse - AI-Powered Property Search & Deal Analysis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <span class="logo">🏠</span>
+                <span class="brand-name">PropertyPulse</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="search">Search</a>
+                <a href="#" class="nav-link" data-page="pipeline">Pipeline</a>
+                <a href="#" class="nav-link" data-page="market">Market</a>
+                <a href="#" class="nav-link" data-page="analysis">Analysis</a>
+            </div>
+            <div class="nav-user">
+                <span class="user-tier">Explorer Plan</span>
+                <button class="btn btn-primary">Upgrade</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Page -->
+            <section id="page-search" class="page active">
+                <div class="search-header">
+                    <h1>Find Your Next Property</h1>
+                    <p>AI-powered search across commercial, residential, multifamily & land</p>
+                </div>
+
+                <!-- Search Filters -->
+                <div class="search-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Property Type</label>
+                            <select id="filter-type">
+                                <option value="all">All Types</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="multifamily">Multifamily</option>
+                                <option value="residential">Residential</option>
+                                <option value="land">Land</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Location</label>
+                            <input type="text" id="filter-location" placeholder="City, State, or ZIP">
+                        </div>
+                        <div class="filter-group">
+                            <label>Price Range</label>
+                            <div class="range-inputs">
+                                <input type="number" id="filter-min-price" placeholder="Min">
+                                <span>to</span>
+                                <input type="number" id="filter-max-price" placeholder="Max">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Size (Sq Ft)</label>
+                            <div class="range-inputs">
+                                <input type="number" id="filter-min-size" placeholder="Min">
+                                <span>to</span>
+                                <input type="number" id="filter-max-size" placeholder="Max">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="searchProperties()">🔍 Search</button>
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="results-container">
+                    <div class="results-header">
+                        <span id="results-count">0 properties found</span>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid">▦ Grid</button>
+                            <button class="view-btn" data-view="list">☰ List</button>
+                        </div>
+                    </div>
+                    <div id="properties-grid" class="properties-grid">
+                        <!-- Properties loaded dynamically -->
+                    </div>
+                    <div id="pagination" class="pagination">
+                        <!-- Pagination loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pipeline Page -->
+            <section id="page-pipeline" class="page">
+                <div class="pipeline-header">
+                    <h1>Deal Pipeline</h1>
+                    <button class="btn btn-primary" onclick="openDealModal()">+ New Deal</button>
+                </div>
+                <div class="pipeline-board" id="pipeline-board">
+                    <!-- Pipeline stages loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Market Page -->
+            <section id="page-market" class="page">
+                <div class="market-header">
+                    <h1>Market Intelligence</h1>
+                    <div class="market-search">
+                        <input type="text" id="market-location" placeholder="Enter city or state">
+                        <button class="btn btn-primary" onclick="loadMarketData()">Analyze Market</button>
+                    </div>
+                </div>
+                <div id="market-data" class="market-data">
+                    <!-- Market data loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Analysis Page -->
+            <section id="page-analysis" class="page">
+                <div class="analysis-header">
+                    <h1>Deal Analysis</h1>
+                    <p>AI-powered investment analysis with risk assessment</p>
+                </div>
+                <div class="analysis-container">
+                    <div class="analysis-input">
+                        <h3>Property Details</h3>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Property</label>
+                                <select id="analysis-property">
+                                    <option value="">Select a property</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Purchase Price ($)</label>
+                                <input type="number" id="analysis-price" placeholder="2500000">
+                            </div>
+                            <div class="input-group">
+                                <label>Down Payment (%)</label>
+                                <input type="number" id="analysis-down" value="25" min="5" max="100">
+                            </div>
+                            <div class="input-group">
+                                <label>Interest Rate (%)</label>
+                                <input type="number" id="analysis-rate" value="7.0" step="0.125">
+                            </div>
+                            <div class="input-group">
+                                <label>Renovation Costs ($)</label>
+                                <input type="number" id="analysis-renovation" placeholder="50000">
+                            </div>
+                            <div class="input-group">
+                                <label>Target Cap Rate (%)</label>
+                                <input type="number" id="analysis-target-cap" value="6.0" step="0.5">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-full" onclick="analyzeDeal()">📊 Analyze Deal</button>
+                    </div>
+                    <div id="analysis-results" class="analysis-results">
+                        <!-- Results loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Property Modal -->
+        <div id="property-modal" class="modal">
+            <div class="modal-content property-detail">
+                <span class="close-btn" onclick="closeModal('property-modal')">&times;</span>
+                <div id="property-detail-content">
+                    <!-- Property details loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Deal Modal -->
+        <div id="deal-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('deal-modal')">&times;</span>
+                <h2>Add to Pipeline</h2>
+                <div class="input-group">
+                    <label>Select Property</label>
+                    <select id="deal-property">
+                        <option value="">Select a property</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Initial Stage</label>
+                    <select id="deal-stage">
+                        <option value="lead">Lead</option>
+                        <option value="analyzing">Analyzing</option>
+                        <option value="offer">Offer Made</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Notes</label>
+                    <textarea id="deal-notes" placeholder="Add any notes..."></textarea>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="addToPipeline()">Add to Pipeline</button>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
