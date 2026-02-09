@@ -11,6 +11,13 @@ const wss = new WebSocketServer({ server });
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Debug logging
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
+    next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // In-memory data store (replace with PostgreSQL in production)
@@ -25,6 +32,15 @@ const db = {
 
 // Initialize with sample data
 initializeSampleData();
+
+// Root route for health check
+app.get('/', (req, res) => {
+    res.json({ 
+        status: 'PropertyPulse API is running',
+        endpoints: ['/api/properties', '/api/pipeline/:userId', '/api/market/:location'],
+        timestamp: new Date().toISOString()
+    });
+});
 
 // API Routes
 
