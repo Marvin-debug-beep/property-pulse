@@ -782,7 +782,7 @@ function initializeSampleData() {
     sampleProperties.forEach(p => db.properties.set(p.id, p));
     
     // Initialize market data
-    ['FL', 'MIAMI', 'TAMPA', 'ORLANDO', 'JACKSONVILLE'].forEach(location => {
+    ['FL', 'MIAMI', 'TAMPA', 'ORLANDO', 'JACKSONVILLE', 'ATLANTA', 'CHARLOTTE', 'NASHVILLE', 'AUSTIN', 'MEMPHIS', 'DENVER', 'PHOENIX', 'CHICAGO', 'BEVERLY_HILLS'].forEach(location => {
         db.marketData.set(location, generateMarketData(location));
     });
 }
